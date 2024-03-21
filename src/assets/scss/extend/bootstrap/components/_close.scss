@@ -1,0 +1,18 @@
+.btn-close{
+    background: transparent;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    opacity: .5;
+    &:focus{
+        outline: none;
+    }
+    &:hover{
+        color: currentColor;
+    }
+    &:after{
+        font-family: $nk-dashlite-font;
+        content: $ni-cross;
+        font-size: 1.1rem;
+    }
+}

@@ -1,0 +1,83 @@
+// Animations
+@keyframes swal2-toast-show {
+  0% {
+    transform: translateY(-.625em) rotateZ(2deg) !important;
+  }
+
+  33% {
+    transform: translateY(0) rotateZ(-2deg) !important;
+  }
+
+  66% {
+    transform: translateY(.3125em) rotateZ(2deg) !important;
+  }
+
+  100% {
+    transform: translateY(0) rotateZ(0deg) !important;
+  }
+}
+
+@keyframes swal2-toast-hide {
+  100% {
+    transform: rotateZ(1deg) !important;
+    opacity: 0 !important;
+  }
+}
+
+@keyframes swal2-toast-animate-success-line-tip {
+  0% {
+    top: .5625em !important;
+    left: .0625em !important;
+    width: 0 !important;
+  }
+
+  54% {
+    top: .125em !important;
+    left: .125em !important;
+    width: 0 !important;
+  }
+
+  70% {
+    top: .625em;
+    left: -.25em !important;
+    width: 1.625em !important; 
+  }
+
+  84% {
+    top: 1.0625em !important;
+    left: .75em !important;
+    width: .5em !important;
+  }
+
+  100% {
+    top: 1.125em !important;
+    left: .1875em !important;
+    width: .75em !important;
+  }
+}
+
+@keyframes swal2-toast-animate-success-line-long {
+  0% {
+    top: 1.625em !important;
+    right: 1.375em !important;
+    width: 0;
+  }
+
+  65% {
+    top: 1.25em !important;
+    right: .9375em !important;
+    width: 0;
+  }
+
+  84% {
+    top: .9375em !important;
+    right: 0;
+    width: 1.125em !important;
+  }
+
+  100% {
+    top: .9375em !important;
+    right: .1875em !important;
+    width: 1.375em !important;
+  }
+}
