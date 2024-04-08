@@ -3,7 +3,7 @@ import ContentAlt from "../../../layout/content/ContentAlt";
 import Head from "../../../layout/head/Head";
 import CalenderApp from "../../../components/partials/calender/Calender";
 import DatePicker from "react-datepicker";
-import { Modal, ModalBody, ModalHeader, Button } from "reactstrap";
+import { ModalBody, ModalHeader, Button } from "reactstrap";
 import {
   Block,
   BlockBetween,
@@ -19,6 +19,7 @@ import {
 import { eventOptions, events } from "../../../components/partials/calender/CalenderData";
 import { useForm } from "react-hook-form";
 import { setDateForPicker } from "../../../utils/Utils";
+import { Drawer } from "antd";
 
 const Calender = () => {
   const [modal, setModal] = useState(false);
@@ -120,144 +121,134 @@ const Calender = () => {
               </BlockBetween>
             </BlockHead>
           </PreviewAltCard>
-
           <PreviewAltCard className="mt-0">
             <CalenderApp events={mockEvents} onDelete={deleteEvent} onEdit={editEvent} />
           </PreviewAltCard>
         </Block>
       </ContentAlt>
 
-      <Modal isOpen={modal} toggle={() => onFormCancel()} className="modal-md">
-        <ModalHeader toggle={() => onFormCancel()}>Add Event</ModalHeader>
-        <ModalBody>
-          <form className="form-validate is-alter" onSubmit={handleSubmit(handleFormSubmit)}>
-            <Row className="gx-4 gy-3">
-              <Col size="12">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="event-title">
-                    Event Title
-                  </label>
-                  <div className="form-control-wrap">
-                    <input
-                      type="text"
-                      id="event-title"
-                      {...register("title", { required: true })}
-                      value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      className="form-control"
-                    />
-                    {errors.title && <p className="invalid">This field is required</p>}
-                  </div>
-                </div>
-              </Col>
-              <Col sm="6">
-                <div className="form-group">
-                  <label className="form-label">Start Date &amp; Time</label>
-                  <Row className="gx-2">
-                    <div className="w-55">
-                      <div className="form-control-wrap">
-                        <DatePicker
-                          selected={formData.startDate}
-                          onChange={(date) => setFormData({ ...formData, startDate: date })}
-                          className="form-control date-picker"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-45">
-                      <div className="form-control-wrap has-timepicker">
-                        <DatePicker
-                          selected={formData.startTime}
-                          onChange={(date) => setFormData({ ...formData, startTime: date })}
-                          showTimeSelect
-                          showTimeSelectOnly
-                          timeIntervals={15}
-                          timeCaption="Time"
-                          dateFormat="h:mm aa"
-                          className="form-control date-picker"
-                        />
-                      </div>
-                    </div>
-                  </Row>
-                </div>
-              </Col>
-              <Col sm="6">
-                <div className="form-group">
-                  <label className="form-label">End Date &amp; Time</label>
-                  <Row className="gx-2">
-                    <div className="w-55">
-                      <div className="form-control-wrap">
-                        <DatePicker
-                          selected={formData.endDate}
-                          onChange={(date) => setFormData({ ...formData, endDate: date })}
-                          className="form-control date-picker"
-                          minDate={formData.startDate}
-                        />
-                      </div>
-                    </div>
-                    <div className="w-45">
-                      <div className="form-control-wrap has-timepicker">
-                        <DatePicker
-                          selected={formData.endTime}
-                          onChange={(date) => setFormData({ ...formData, endTime: date })}
-                          showTimeSelect
-                          showTimeSelectOnly
-                          timeIntervals={15}
-                          timeCaption="Time"
-                          dateFormat="h:mm aa"
-                          className="form-control date-picker"
-                        />
-                      </div>
-                    </div>
-                  </Row>
-                </div>
-              </Col>
-              <Col size="12">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="event-description">
-                    Event Description
-                  </label>
-                  <div className="form-control-wrap">
-                    <textarea
-                      className="form-control"
-                      id="event-description"
-                      {...register("description", { required: true })}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    ></textarea>
+      <Drawer width={600} open={modal} onClose={() => onFormCancel()}>
+        <form className="form-validate is-alter" onSubmit={handleSubmit(handleFormSubmit)}>
+          <Row className="gx-4 gy-3">
+            <h5>Add Event</h5>
+            <Col size="12">
+              <div className="form-group">
+                <label className="form-label" htmlFor="event-title">
+                  Event Title
+                </label>
 
-                    {errors.description && <p className="invalid">This field is required</p>}
-                  </div>
+                <div className="form-control-wrap">
+                  <input
+                    type="text"
+                    id="event-title"
+                    {...register("title", { required: true })}
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="form-control"
+                  />
+                  {errors.title && <p className="invalid">This field is required</p>}
                 </div>
-              </Col>
-              <Col size="12">
-                <div className="form-group">
-                  <label className="form-label">Event Category</label>
-                  <div className="form-control-wrap">
-                    <RSelect
-                      options={eventOptions}
-                      value={formData.theme}
-                      onChange={(selected) => setFormData({ ...formData, theme: selected })}
-                    />
-                  </div>
+              </div>
+            </Col>
+
+            <div className="form-group">
+              <label className="form-label mb-3">Start Date &amp; Time</label>
+              <div className="d-flex align-items-center gap-3">
+                <div className="w-100">
+                  <DatePicker
+                    selected={formData.startDate}
+                    onChange={(date) => setFormData({ ...formData, startDate: date })}
+                    className="form-control w-100"
+                  />
                 </div>
-              </Col>
-              <Col size="12">
-                <ul className="d-flex justify-content-between gx-4 mt-1">
-                  <li>
-                    <Button type="submit" color="primary">
-                      Add Event
-                    </Button>
-                  </li>
-                  <li>
-                    <Button color="danger" className="btn-dim" onClick={() => onFormCancel()}>
-                      Discard
-                    </Button>
-                  </li>
-                </ul>
-              </Col>
-            </Row>
-          </form>
-        </ModalBody>
-      </Modal>
+
+                <div className="has-timepicker w-100">
+                  <DatePicker
+                    selected={formData.startTime}
+                    onChange={(date) => setFormData({ ...formData, startTime: date })}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="form-control w-100"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label mb-3">End Date &amp; Time</label>
+
+              <div className="d-flex w-100 align-items-center gap-2">
+                <div className="w-100">
+                  <DatePicker
+                    selected={formData.endDate}
+                    onChange={(date) => setFormData({ ...formData, endDate: date })}
+                    className="form-control w-100"
+                    minDate={formData.startDate}
+                  />
+                </div>
+
+                <div className="has-timepicker w-100">
+                  <DatePicker
+                    selected={formData.endTime}
+                    onChange={(date) => setFormData({ ...formData, endTime: date })}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="form-control w-100"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="event-description">
+                Event Description
+              </label>
+              <div className="form-control-wrap">
+                <textarea
+                  className="form-control"
+                  id="event-description"
+                  {...register("description", { required: true })}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                ></textarea>
+
+                {errors.description && <p className="invalid">This field is required</p>}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Event Category</label>
+              <div className="form-control-wrap">
+                <RSelect
+                  options={eventOptions}
+                  value={formData.theme}
+                  onChange={(selected) => setFormData({ ...formData, theme: selected })}
+                />
+              </div>
+            </div>
+
+            <Col size="12">
+              <ul className="d-flex justify-content-between gx-4 mt-1">
+                <li>
+                  <Button type="submit" color="primary">
+                    Add Event
+                  </Button>
+                </li>
+                <li>
+                  <Button color="danger" className="btn-dim" onClick={() => onFormCancel()}>
+                    Discard
+                  </Button>
+                </li>
+              </ul>
+            </Col>
+          </Row>
+        </form>
+      </Drawer>
     </React.Fragment>
   );
 };
